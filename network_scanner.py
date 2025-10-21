@@ -12,10 +12,9 @@ import socket
 import sys
 
 print("test")
-def start_server(host="127.0.0.1", port=8080):
+def start_server(host="0.0.0.0", port=8080):
     # Create a TCP/IP socket of IPv4 family and SOCK_STREAM type
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSADDR, 1)
     server_socket.bind((host, port))
     
     while True:
@@ -27,7 +26,10 @@ def start_server(host="127.0.0.1", port=8080):
         data = client_socket.recv(1024)
 
         if data:
+            response = data.decode("utf-8")
             print(f"Raw data: {data}")
+            if response == "ping":
+                print("pong")
 
 if __name__== "__main__":
     start_server
