@@ -1,9 +1,17 @@
 # Network Scanner
 
 ## Group Members
+<<<<<<< Updated upstream
 - [Name 1]
 - [Name 2]
 - [Name 3]
+=======
+- Mattias Karlsson #Test 09:09
+- Lukas Svensson
+- Björn
+- Vien Hoang
+- Daniel Hallgren
+>>>>>>> Stashed changes
 
 ## Description
 [Brief description of what your network scanner does]
