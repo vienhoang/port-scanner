@@ -3,7 +3,7 @@ import socket
 import sys
 
 
-def start_client(host="0.0.0.0", port=8080):
+def start_client(host="127.0.0.1", port=8080):
     # Create a TCP/IP socket
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
