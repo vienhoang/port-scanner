@@ -3,20 +3,16 @@ import socket
 import sys
 
 
-def start_client(host="45.33.32.156"):
+def start_client(host="45.33.32.156", port=80):
     # Create a TCP/IP socket
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-<<<<<<< HEAD
-    socket.setdefaulttimeout(1)
-    for port in range(75, 85):
-=======
 
     try:
         print(f"Connecting to {host}:{port}...")
         # Establishing the connection from client to server
         client_socket.connect((host, port))
-        print("Connected!")
+        print(f"Connected! 1 to {port}")
 
         # Setting up the "ping" message
         message = "ping"
@@ -26,13 +22,12 @@ def start_client(host="45.33.32.156"):
         # Sending "ping" message to server
         client_socket.sendall(message.encode("utf-8"))
 
->>>>>>> vien
         try:
             
             print(f"Connecting to {host}:{port}...")
             # Establishing the connection from client to server
             client_socket.connect((host, port))
-            print("Connected!")
+            print(f"Connected! to {port}")
 
             # Setting up the "ping" message
             message = "ping"
@@ -60,9 +55,9 @@ def start_client(host="45.33.32.156"):
             print(f"Error: {e}")
             sys.exit(1)
         # No matter what, error or not, close the socket.
-        finally:
-            client_socket.close()
-            print("Connection closed")
+    finally:
+        client_socket.close()
+        print("Connection closed")
 
 
 if __name__ == "__main__":

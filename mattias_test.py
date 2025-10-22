@@ -32,25 +32,25 @@ Traceback (most recent call last):
     server_socket.bind((host, port))
 OSError: [Errno 99] Cannot assign requested address
 """
-import pyfiglet
+#import pyfiglet
 import sys
 import socket
 from datetime import datetime
  
-ascii_banner = pyfiglet.figlet_format("PORT SCANNER")
-print(ascii_banner)
+#ascii_banner = pyfiglet.figlet_format("PORT SCANNER")
+#print(ascii_banner)
  
 # Defining a target
 if len(sys.argv) == 2:
-    
+    print(sys.argv)
     # translate hostname to IPv4
     target = socket.gethostbyname(sys.argv[1]) 
 else:
     print("Invalid amount of Argument")
-
+    print(sys.argv)
 # Add Banner 
 print("-" * 50)
-print("Scanning Target: " + target)
+print("Scanning Target: " + "45.33.32.156")
 print("Scanning started at:" + str(datetime.now()))
 print("-" * 50)
  
@@ -58,14 +58,14 @@ try:
     
     # will scan ports between 1 to 65,535
     for port in range(1,1000):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         socket.setdefaulttimeout(1)
         
         # returns an error indicator
-        result = s.connect_ex((target,port))
+        result = client_socket.connect_ex(("45.33.32.156",port))
         if result ==0:
             print("Port {} is open".format(port))
-        s.close()
+        client_socket.close()
         
 except KeyboardInterrupt:
         print("\n Exiting Program !!!!")
