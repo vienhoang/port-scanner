@@ -3,7 +3,7 @@ import socket
 import sys
 
 
-def start_server(host="0.0.0.0", port=8080):
+def start_server(host="45.33.32.156", port=80):
     # Create a TCP/IP socket of IPv4 family and SOCK_STREAM type
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # To avoid getting the "Address already in use" error
