@@ -7,8 +7,26 @@ def start_client(host="45.33.32.156"):
     # Create a TCP/IP socket
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+<<<<<<< HEAD
     socket.setdefaulttimeout(1)
     for port in range(75, 85):
+=======
+
+    try:
+        print(f"Connecting to {host}:{port}...")
+        # Establishing the connection from client to server
+        client_socket.connect((host, port))
+        print("Connected!")
+
+        # Setting up the "ping" message
+        message = "ping"
+
+        print(f"Sending: {message}")
+
+        # Sending "ping" message to server
+        client_socket.sendall(message.encode("utf-8"))
+
+>>>>>>> vien
         try:
             
             print(f"Connecting to {host}:{port}...")

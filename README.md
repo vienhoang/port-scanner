@@ -1,17 +1,24 @@
 # Network Scanner
 
 ## Group Members
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 - [Name 1]
 - [Name 2]
 - [Name 3]
 =======
 - Mattias Karlsson #Test 09:09
+=======
+- Mattias Karlsson
+>>>>>>> vien
 - Lukas Svensson
 - Björn
 - Vien Hoang
 - Daniel Hallgren
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> vien
 
 ## Description
 [Brief description of what your network scanner does]
@@ -42,3 +49,4 @@ python network_scanner.py
 
 ## What We Learned
 [Key takeaways from the project]
+

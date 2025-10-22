@@ -44,7 +44,9 @@ def start_server(host="45.33.32.156", port=80):
         sys.exit(1)
     except Exception as e:
         # Otherwise, handle any other exception
-        print("Something went wrong!\nError: {e}")
+
+        print(f"Something went wrong!\nError: {e}")
+
     finally:
         # Always close the server socket connection that was established above
         server_socket.close()
@@ -52,3 +54,4 @@ def start_server(host="45.33.32.156", port=80):
 
 if __name__ == "__main__":
     start_server()
+
