@@ -9,6 +9,9 @@ venv/
 ENV/
 .venv
 
+# Text files
+*.txt
+
 # IDE
 .vscode/
 .idea/

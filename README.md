@@ -1,11 +1,11 @@
 # Network Scanner
 
 ## Group Members
-- Mattias Karlsson #Test 09:09
-- Lukas Svensson
 - Björn
-- Vien Hoang
-- Daniel Hallgren
+- Daniel
+- Mattias.K
+- Lukas.S
+- Vien
 
 ## Description
 [Brief description of what your network scanner does]
