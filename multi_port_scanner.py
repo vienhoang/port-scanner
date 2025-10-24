@@ -9,7 +9,7 @@ import socket
 import sys
 import threading
 import time
-from tqdm import tqdm
+from tqdm.auto import tqdm
 from colorama import init, Fore
 from datetime import datetime
 
@@ -25,51 +25,55 @@ GRAY = Fore.LIGHTBLACK_EX
 open_ports = []
         
 # Set range ports, including the max port
-def start_multiscan(target, start_port, max_port, timeout=1.0):
+def start_multiscan(target, start_port, max_port, timeout=0.2):
 
-    # Set range ports, including the max port
-    for port in range(start_port, max_port + 1):
-        #AF_INET = IPv4, SOCK_STREAM = constant, create a TCP socket
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        try:
-            s.settimeout(timeout)
-            result = s.connect_ex((target, port))
-            # If a port is open, add the open port to the open_ports list
-            if result == 0:
-                # Add open port to the open_ports list
-                open_ports.append(port)
-                try:
-                    # For HTTP-ports
-                    if port in (80, 8080):
-                        # Sends an HTTP HEAD request to the connected server, asking for only HTTP headers without a body
-                        s.sendall(b"HEAD / HTTP/1.0\r\nHost: %b\r\n\r\n" % target.encode())
-                    # Read max 1024 bytes from the opened socket
-                    data = s.recv(1024)
-                    # Convert the data and do split and strip empy spaces, and get the first part
-                    banner = data.decode(errors="ignore").splitlines()[0].strip()
-                    # If the banner exists
-                    if banner:
-                        print(f"Banner for {target}:{port} -> {banner}")
-                    else:
-                        print(f"No banner received for {target}:{port}")
-                # Socket timed out error
-                except socket.timeout:
-                    print(f"No banner (timeout) for {target}:{port}")
-                # Catch other errors
-                except Exception as e:
-                    print(f"Error reading banner for {target}:{port}: {e}")
-        # DNS lookup failed error
-        except socket.gaierror as e:
-            print(f"Hostname could not be resolved. {e}")
-            return
-        # Socket error
-        except socket.error as e:
-            print(f"Could not connect to server. {e}")
-            return
-        # Close socket
-        finally:
-            s.close()
+    total_ports = max_port - start_port + 1
+    with tqdm(total=total_ports, desc=f"Scanning {target}", unit="port") as progress_bar:
 
+        # Set range ports, including the max port
+        for port in range(start_port, max_port + 1):
+            #AF_INET = IPv4, SOCK_STREAM = constant, create a TCP socket
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            try:
+                s.settimeout(timeout)
+                result = s.connect_ex((target, port))
+                # If a port is open, add the open port to the open_ports list
+                if result == 0:
+                    # Add open port to the open_ports list
+                    try:
+                        # For HTTP-ports
+                        if port in (80, 8080):
+                            # Sends an HTTP HEAD request to the connected server, asking for only HTTP headers without a body
+                            s.sendall(b"HEAD / HTTP/1.0\r\nHost: %b\r\n\r\n" % target.encode())
+                        # Read max 1024 bytes from the opened socket
+                        data = s.recv(1024)
+                        # Convert the data and do split and strip empy spaces, and get the first part
+                        banner = data.decode(errors="ignore").splitlines()[0].strip()
+                        # If the banner exists
+                        if banner:
+                            open_ports.append(f"Port {port} is open")
+                            #open_ports.append(f"Banner for {target}:{port} -> {banner}")
+                            print(f"Banner for {target}:{port} -> {banner}")
+                        else:
+                            print(f"No banner received for {target}:{port}")
+                    # Socket timed out error
+                    except socket.timeout:
+                        print(f"No banner (timeout) for {target}:{port}")
+                    # Catch other errors
+                    except Exception as e:
+                        print(f"Error reading banner for {target}:{port}: {e}")
+            # DNS lookup failed error
+            except socket.gaierror as e:
+                print(f"Hostname could not be resolved. {e}")
+                return
+            # Socket error
+            except socket.error as e:
+                print(f"Could not connect to server. {e}")
+                return
+            # Close socket
+            finally:
+                s.close()
+            progress_bar.update(1)
     # Print out the open_ports list
     for p in open_ports:
         print(f"{GREEN} Port {p} is open.")
@@ -81,13 +85,13 @@ def start_multiscan(target, start_port, max_port, timeout=1.0):
 def save_ports_to_file(port_list):
     print(f"{GREEN}Save ports {port_list} to file.")
     file_name = "port_results.txt"
-
     # Try to save to file
     try:
         with open(file_name, "w") as f:
             # Separate each line with \n at the end
+            f.write(f"Open ports for target IP {target} \n")
             for port in port_list:
-                f.write(f"Port {port} is open.\n")
+                f.write(f"{port}\n")
                 # Print out the result of the saved file 
             print(f"{MAGENTA}The results have been saved to the file: {file_name}")
 
@@ -132,8 +136,8 @@ if __name__ == "__main__":
         max_port = int(input(Fore.BLUE + 'Ending port: '))
 
     # Simulates the loading bar 
-    for x in tqdm(range(100)):
-        time.sleep(0.005)
+    #for x in tqdm(range(100)):
+    #    time.sleep(0.005)
 
     # Scan the give url with start and end ports
     start_multiscan(target, start_port, max_port)
