@@ -25,7 +25,7 @@ GRAY = Fore.LIGHTBLACK_EX
 open_ports = []
         
 # Set range ports, including the max port
-def start_multiscan(target, start_port, max_port, timeout=1.0):
+def start_multiscan(name, start_port, max_port, timeout=1.0):
 
     # Set range ports, including the max port
     for port in range(start_port, max_port + 1):
@@ -107,18 +107,27 @@ def save_ports_to_file(port_list):
 if __name__ == "__main__":
     
     # Optional CLI arguments, i.e multi_port_scanner.py scanme.nmap.org 1 30
+    # len(sys.argv) checks are optional CLI arguments.
+    # I assume an argument format of <domain name or IP>, <start_port>, <end_port>.
     if len(sys.argv) == 4:
+        target = socket.gethostbyname(sys.argv[1])
         start_port = int(sys.argv[2])
-        max_port = int(sys.argv[3])                     
+        max_port = int(sys.argv[3])
+                
         
     # I.e multi_port_scanner.py scanme.nmap.org
+    # With only 2 arguments, it will ask the user to input <start_port> and <end_port>.
     elif len(sys.argv) == 2:
-        # translate hostname to IPv4
+    # translate hostname to IPv4. It will also accept just the IP.
         target = socket.gethostbyname(sys.argv[1])
+        start_port = int(input('starting port: '))
+        max_port = int(input('ending port: '))
 
     # Else inputs from console
-    else:
-        target = str(input(Fore.BLUE + 'Enter target address: '))
+    # As last resort, it will ask the user to input IP or domain.
+    else: # It will convert <domain name> to IPv4, before asking for <start_port> and <end_port>.
+        domain_name = str(input(Fore.BLUE + 'Enter target IP or domain: '))
+        target = socket.gethostbyname(domain_name)
         start_port = int(input(Fore.BLUE + 'Starting port: '))
         max_port = int(input(Fore.BLUE + 'Ending port: '))
 
