@@ -8,32 +8,53 @@
 - Daniel Hallgren
 
 ## Description
-[Brief description of what your network scanner does]
+In October 2025, we decided to make one of the most advanced and secure portscanners in the whole class. We sat many hours programming under very dramatic circumstances, personal struggles and bad weather. Finally, when we thought we couldn’t be done before the first week, we managed to finish our task.
+
+We can now proudly present to the world our port scanner.
+
 
 ## Installation
 ```bash
 # Install dependencies (if needed)
 pip install -r requirements.txt
 ```
+If not installed:
+Install:
+tqdm
+colorama 
 
 ## Usage
 ```bash
 # How to run your scanner
 python network_scanner.py
+1. Run the script
+2. Enter an IP-adress or URL
+3. Enter the starting port in the range
+4. Enter the last port in the range
+5. Take a snack and a drink and enjoy the loading bar
+
 ```
 
 ## Features
-- [ ] Single port check
-- [ ] Multi-port scanning
-- [ ] Service identification
-- [ ] [Additional features you implemented]
+- [x] Single port check
+- [x] Multi-port scanning
+- [x] Service identification
+- [x] Saves to file
+- [X] Loading bar
+- [x] OS detection of the target
+- [x] Beutiful colorama lines
 
 ## Testing
-[Describe how you tested your scanner and what the results were]
+Tested through scanme.nmap.org sites ports(1-100). Testing was succesful!
 
 ## Known Limitations
-[Any limitations or known issues]
+No threading function(yet)
+Could have been faster.
 
 ## What We Learned
-[Key takeaways from the project]
+Basic port scanning abilities
+To work in a team
+Troubleshooting
+Testing...and testing again
+Better Python and Github abilities
 
