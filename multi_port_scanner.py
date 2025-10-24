@@ -25,7 +25,7 @@ GRAY = Fore.LIGHTBLACK_EX
 open_ports = []
         
 # Set range ports, including the max port
-def start_multiscan(name, start_port, max_port, timeout=1.0):
+def start_multiscan(target, start_port, max_port, timeout=1.0):
 
     # Set range ports, including the max port
     for port in range(start_port, max_port + 1):
