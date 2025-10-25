@@ -1,6 +1,3 @@
-def my_util(param):
-    print("You called me with", param)
-    print(f"__name__ is: {__name__}")
-    
-if __name == "__main__":
-    print("Hi")
+44.228.249.3
+127.0.0.1
+45.33.32.156
