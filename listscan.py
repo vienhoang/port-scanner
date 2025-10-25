@@ -13,7 +13,7 @@ import time
 
 # Init colors
 
-"""To do:
+"""To do: Reinstate all extra
 open <sys.argv> as text
 Maybe set port range in txt aswell
 """
