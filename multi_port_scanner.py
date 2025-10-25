@@ -8,7 +8,7 @@ Date: 251021
 import socket
 import sys
 import time
-from tqdm import tqdm
+from tqdm.auto import tqdm
 from colorama import init, Fore
 
 # Init colors
@@ -22,7 +22,7 @@ RESET = Fore.RESET
 open_ports = []
         
 # Set range ports, including the max port
-def start_multiscan(name, start_port, max_port, timeout=1.0):
+def start_multiscan(target, start_port, max_port, timeout=0.2):
 
     # Calculation for progress bar
     total_ports = max_port - start_port + 1
