@@ -32,9 +32,9 @@ def start_multiscan(targets, start_port, max_port, timeout=0.2, file_name="port_
     try:
         with open(file_name, "w") as f:    
 
-            for target in targets:
+            for ips in targets:
                 open_ports = []  # Reset for each target
-                target = socket.gethostbyname(target)
+                target = socket.gethostbyname(ips)
                 f.write(f"{'='*60}\nScanning target IP {target}\n")
                 # Calculation for progress bar
             #   total_ports = max_port - start_port + 1
@@ -84,8 +84,6 @@ def start_multiscan(targets, start_port, max_port, timeout=0.2, file_name="port_
                                 open_ports.append(f"Port {port} : Error reading banner {e}")
                                 f.write(f"Port {port} : Error reading banner {e}\n")
                                 #progress_bar.write(f"\nError reading banner for {target}:{port}: {e}")
-                        else:
-                            f.write(f"No ports are open for {target}\n")                    
                     # DNS lookup failed error
                     except socket.gaierror as e:
                         f.write(f"{target} Hostname could not be resolved. {e}\n")
@@ -95,8 +93,11 @@ def start_multiscan(targets, start_port, max_port, timeout=0.2, file_name="port_
                         f.write(f"{target} Could not connect to server. {e}\n")
                         return open_ports
                     # Close socket
-                    finally:
+                    finally:                    
                         s.close()
+                if not open_ports:
+                    f.write(f"No ports are open for {target}\n")
+
             #               progress_bar.update(1)
 
 
@@ -116,4 +117,4 @@ def start_multiscan(targets, start_port, max_port, timeout=0.2, file_name="port_
 if __name__ == "__main__":
 
     # Scan the give url with start and end ports
-    start_multiscan(targets, 31337, 31337, 1)
+    start_multiscan(targets, 20, 80, 0.2)
