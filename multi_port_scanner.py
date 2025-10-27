@@ -26,7 +26,7 @@ def start_multiscan(target, start_port, max_port, timeout=1.0):
 
     # Calculation for progress bar
     total_ports = max_port - start_port + 1
-    with tqdm(total=total_ports, desc=f"Scanning {target} from [{start_port}] to [{max_port}]", unit="port") as progress_bar:
+    with tqdm(total=total_ports, desc=f"{BLUE}Scanning {target} from [{start_port}] to [{max_port}]", unit="port") as progress_bar:
 
         # Set range ports, including the max port
         for port in range(start_port, max_port + 1):
@@ -139,15 +139,15 @@ if __name__ == "__main__":
     # Else inputs from console
     # As last resort, it will ask the user to input IP or domain.
     else: # It will convert <domain name> to IPv4, before asking for <start_port> and <end_port>.
-        domain_name = str(input(Fore.BLUE + 'Enter target IP or domain: '))
+        domain_name = str(input(BLUE + 'Enter target IP or domain: '))
         # Spit url and get the domain name
         if "http" in domain_name:
             target = domain_name.split("://")
             domain_name = target[1]
 
         target = socket.gethostbyname(domain_name)
-        start_port = int(input(Fore.BLUE + 'Starting port: '))
-        max_port = int(input(Fore.BLUE + 'Ending port: '))
+        start_port = int(input(BLUE + 'Starting port: '))
+        max_port = int(input(BLUE + 'Ending port: '))
 
     # Scan the give url with start and end ports
     start_multiscan(target, start_port, max_port)
