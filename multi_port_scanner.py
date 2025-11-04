@@ -7,7 +7,6 @@ Date: 251021
 # Importing modules
 import socket
 import sys
-import time
 from tqdm import tqdm
 from colorama import init, Fore
 
@@ -120,18 +119,30 @@ def save_ports_to_file(target, port_list, file_name="port_results.txt"):
 # Run the program
 if __name__ == "__main__":
     
-    # Optional CLI arguments, i.e multi_port_scanner.py scanme.nmap.org 1 30
+    # Set default timeout to 1s
+    timeout = 1
+
+    # Optional CLI arguments, i.e multi_port_scanner.py scanme.nmap.org 1 30 2
     # len(sys.argv) checks are optional CLI arguments.
-    # I assume an argument format of <domain name or IP>, <start_port>, <end_port>.
-    if len(sys.argv) == 4:
+    # Assume an argument format of <domain name or IP>, <start_port>, <end_port>, <timeout>
+    if len(sys.argv) == 5:
         target = socket.gethostbyname(sys.argv[1])
         start_port = int(sys.argv[2])
-        max_port = int(sys.argv[3])           
+        max_port = int(sys.argv[3])
+        timeout = float(sys.argv[4])
+
+    # Optional CLI arguments, i.e multi_port_scanner.py scanme.nmap.org 1 30
+    # len(sys.argv) checks are optional CLI arguments.
+    # Assume an argument format of <domain name or IP>, <start_port>, <end_port>.
+    elif len(sys.argv) == 4:
+        target = socket.gethostbyname(sys.argv[1])
+        start_port = int(sys.argv[2])
+        max_port = int(sys.argv[3])   
         
     # I.e multi_port_scanner.py scanme.nmap.org
     # With only 2 arguments, it will ask the user to input <start_port> and <end_port>.
     elif len(sys.argv) == 2:
-    # translate hostname to IPv4. It will also accept just the IP.
+    # Translate hostname to IPv4. It will also accept just the IP.
         target = socket.gethostbyname(sys.argv[1])
         start_port = int(input('starting port: '))
         max_port = int(input('ending port: '))
@@ -148,6 +159,7 @@ if __name__ == "__main__":
         target = socket.gethostbyname(domain_name)
         start_port = int(input(BLUE + 'Starting port: '))
         max_port = int(input(BLUE + 'Ending port: '))
-
+        timeout = input(BLUE + "Set timout for each port: ")
+        
     # Scan the give url with start and end ports
-    start_multiscan(target, start_port, max_port)
+    start_multiscan(target, start_port, max_port, timeout)
