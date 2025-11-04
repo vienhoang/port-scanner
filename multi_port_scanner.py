@@ -149,5 +149,13 @@ if __name__ == "__main__":
         start_port = int(input(Fore.BLUE + 'Starting port: '))
         max_port = int(input(Fore.BLUE + 'Ending port: '))
 
+    #Userinput to set timeout for each port.
+    timeoot = input(Fore.BLUE + "Set timout for each port: ")
+    #Without input, it will use a default value
+    if not timeoot:
+        timeout = 1
+    else:
+        timeout = float(timeoot)        
+        
     # Scan the give url with start and end ports
-    start_multiscan(target, start_port, max_port)
+    start_multiscan(target, start_port, max_port, timeout)
