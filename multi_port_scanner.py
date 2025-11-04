@@ -159,7 +159,7 @@ if __name__ == "__main__":
         target = socket.gethostbyname(domain_name)
         start_port = int(input(BLUE + 'Starting port: '))
         max_port = int(input(BLUE + 'Ending port: '))
-        timeout = input(BLUE + "Set timout for each port: ")
+        timeout = float(input(BLUE + "Set timout for each port: "))
         
     # Scan the give url with start and end ports
     start_multiscan(target, start_port, max_port, timeout)
