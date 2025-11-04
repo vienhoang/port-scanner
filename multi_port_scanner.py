@@ -120,13 +120,20 @@ def save_ports_to_file(target, port_list, file_name="port_results.txt"):
 # Run the program
 if __name__ == "__main__":
     
+    if len(sys.argv) == 5:
+        target = socket.gethostbyname(sys.argv[1])
+        start_port = int(sys.argv[2])
+        max_port = int(sys.argv[3])
+        timeout = float(sys.argv[4])
+        
     # Optional CLI arguments, i.e multi_port_scanner.py scanme.nmap.org 1 30
     # len(sys.argv) checks are optional CLI arguments.
     # I assume an argument format of <domain name or IP>, <start_port>, <end_port>.
-    if len(sys.argv) == 4:
+    elif len(sys.argv) == 4:
         target = socket.gethostbyname(sys.argv[1])
         start_port = int(sys.argv[2])
         max_port = int(sys.argv[3])           
+        timeout = input(Fore.BLUE + "Set timout for each port: ")
         
     # I.e multi_port_scanner.py scanme.nmap.org
     # With only 2 arguments, it will ask the user to input <start_port> and <end_port>.
@@ -135,6 +142,7 @@ if __name__ == "__main__":
         target = socket.gethostbyname(sys.argv[1])
         start_port = int(input('starting port: '))
         max_port = int(input('ending port: '))
+        timeout = input(Fore.BLUE + "Set timout for each port: ")
 
     # Else inputs from console
     # As last resort, it will ask the user to input IP or domain.
@@ -148,14 +156,13 @@ if __name__ == "__main__":
         target = socket.gethostbyname(domain_name)
         start_port = int(input(Fore.BLUE + 'Starting port: '))
         max_port = int(input(Fore.BLUE + 'Ending port: '))
+        timeout = input(Fore.BLUE + "Set timout for each port: ")
 
-    #Userinput to set timeout for each port.
-    timeoot = input(Fore.BLUE + "Set timout for each port: ")
-    #Without input, it will use a default value
-    if not timeoot:
+    #Without timeout input, it will use a default value
+    if not timeout:
         timeout = 1
     else:
-        timeout = float(timeoot)        
+        timeout = float(timeout)        
         
     # Scan the give url with start and end ports
     start_multiscan(target, start_port, max_port, timeout)
